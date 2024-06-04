@@ -7,6 +7,7 @@ export type ButtonProps = {
     className?: string;
     variant?: "primary" | "secondary";
     icon?: ReactNode;
+    onClick?: () => void;
 };
 
 export type TNavLink = {
@@ -15,3 +16,8 @@ export type TNavLink = {
     title: string;
     children?: TNavLink[];
 };
+
+export type SearchInputProps = {
+    placeholder: string;
+    onSubmit: (query: string) => void;
+}
