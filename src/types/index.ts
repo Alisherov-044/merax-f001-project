@@ -21,3 +21,21 @@ export type SearchInputProps = {
     placeholder: string;
     onSubmit: (query: string) => void;
 }
+
+export type TProduct = {
+    id: number;
+    name: string;
+    description: string;
+    category: string;
+    price: number;
+    discount?: number;
+    images: string[];
+}
+
+export type CardProps = {
+    product: TProduct;
+}
+
+export type ProductsSectionProps = {
+    products: TProduct[]
+}
