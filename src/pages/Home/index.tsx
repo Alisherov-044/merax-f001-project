@@ -1,21 +1,39 @@
+import { products } from "@/data";
 import { HeroSection } from "./sections/Hero";
 import { ProductsSection } from "./sections/Products";
+import { CartTriggerBtn, Drawer, Icons, MiniCard } from "@/components";
+import { useSelector, useDispatch } from "react-redux";
+import { closeCart } from "@/redux/slices/stateSlice";
 
 export function HomePage() {
-  const product = {
-    id: 1,
-    name: "Apples",
-    description: "An apple is a sweet, edible fruit produced by an apple tree (Malus domestica). Apple trees are ... The skin of ripe apples is generally red, yellow, g..",
-    price: 2,
-    discount: 20,
-    images: ["https://pickbazar-react.vercel.app/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1%2FApples.jpg&w=1920&q=75"],
-    category: "Fruits & Vegetables"
-  }
+  const { isCartOpen } = useSelector((state) => state.state);
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   return (
     <main>
       <HeroSection />
-      <ProductsSection products={[product, product, product, product, product, product]} />
+      <ProductsSection products={products} />
+      <CartTriggerBtn />
+      <Drawer isOpen={isCartOpen} onClose={() => dispatch(closeCart())}>
+        <div className="flex items-center justify-between py-4 px-6 border-b">
+          <div className="flex items-center gap-x-2">
+            <Icons.basket className="fill-primary" />
+            <span className="text-primary">1 item</span>
+          </div>
+          <button
+            onClick={() => dispatch(closeCart())}
+            className="group w-[28px] h-[28px] rounded-full bg-gray-200 flex items-center justify-center transition-all duration-300 hover:bg-primary"
+          >
+            <Icons.close className="h-3 w-3 group-hover:fill-white transition-all duration-300" />
+          </button>
+        </div>
+        <ul>
+          {cart.map((item) => (
+            <MiniCard product={item} />
+          ))}
+        </ul>
+      </Drawer>
     </main>
   );
 }

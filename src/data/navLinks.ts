@@ -27,22 +27,22 @@ export const navLinks: TNavLink[] = [
                 title: "Flash Sale",
             },
             {
-                id: 1,
+                id: 2,
                 link: "#",
                 title: "Flash Sale",
             },
             {
-                id: 1,
+                id: 3,
                 link: "#",
                 title: "Flash Sale",
             },
             {
-                id: 1,
+                id: 4,
                 link: "#",
                 title: "Flash Sale",
             },
             {
-                id: 1,
+                id: 5,
                 link: "#",
                 title: "Flash Sale",
             },

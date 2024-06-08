@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export function Header() {
   return (
-    <header className="fixed top-0 z-30 w-full bg-white h-16 md:h-20 border-b flex items-center shadow-sm">
+    <header className="fixed top-0 z-10 w-full bg-white h-16 md:h-20 border-b flex items-center shadow-sm">
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-x-5">
           <button className="hidden md:flex xl:hidden flex-col justify-between w-6 h-4">
@@ -17,12 +17,11 @@ export function Header() {
         <div className="flex items-center gap-x-4">
           <ul className="hidden xl:flex items-center gap-x-5">
             {navLinks.map(({ id, link, title, children }) => (
-              <Link
-                to={link}
+              <div
                 key={id}
                 className="group relative flex items-center gap-x-2 py-3"
               >
-                {title}
+                <Link to={link}>{title}</Link>
                 {children && <Icons.arrow.downOutlined />}
                 <div className="absolute left-0 bottom-0 translate-y-full border shadow-sm rounded-md bg-white opacity-0 -z-50 group-hover:opacity-100 group-hover:z-50 flex flex-col transition-all duration-300">
                   {children?.map(({ id, link, title }) => (
@@ -35,7 +34,7 @@ export function Header() {
                     </Link>
                   ))}
                 </div>
-              </Link>
+              </div>
             ))}
           </ul>
           <button className="w-9 h-9 rounded-full hidden md:flex items-center justify-center border">

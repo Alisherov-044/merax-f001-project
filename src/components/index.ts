@@ -4,3 +4,7 @@ export { Logo } from "./Logo";
 export { Button } from "./Button";
 export { SearchInput } from './SearchInput'
 export { Card } from './Card'
+export { CartTriggerBtn } from './CartTriggerBtn'
+export { Drawer } from './Drawer'
+export { QtyController } from './QtyController'
+export { MiniCard } from './MiniCard'
