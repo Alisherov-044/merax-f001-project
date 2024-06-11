@@ -1,18 +1,30 @@
 import { CardProps } from "@/types";
-import { Icons } from "@/components";
+import { Icons, QtyController } from "@/components";
 import { calculatePrice, formatCurrency } from "@/utils";
-import { addToCart } from "@/redux/slices/cartSlice";
+import {
+  addToCart,
+  decrement,
+  increment,
+  removeFromCart,
+} from "@/redux/slices/cartSlice";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export function Card({ product }: CardProps) {
-  let { name, description, price, images, category, discount } = product;
+  let { id, name, description, price, images, category, discount } = product;
+  const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
+  const isExistInCart = cart.some((item) => item.id === id);
+  const productInCart = cart.find((item) => item.id === id);
 
   return (
-    <div className="w-[326px] h-[410px] relative border rounded-md bg-white">
-      <div className="absolute top-3 right-3 z-10 bg-orange-300 text-white text-sm px-2 rounded-xl">
-        {discount}%
-      </div>
+    <div className="h-[410px] relative border rounded-md bg-white">
+      {discount ? (
+        <div className="absolute top-3 right-3 z-10 bg-orange-300 text-white text-sm px-2 rounded-xl">
+          {discount}%
+        </div>
+      ) : null}
       <div className="h-[256px]">
         <img
           src={images[0]}
@@ -33,15 +45,28 @@ export function Card({ product }: CardProps) {
               {formatCurrency(calculatePrice(price, discount))}
             </h5>
           </div>
-          <button
-            onClick={() => dispatch(addToCart(product))}
-            className="group flex items-center gap-x-2 px-5 py-2 border border-gray-200 rounded-3xl hover:border-primary hover:bg-primary transition-all"
-          >
-            <Icons.cart className="h-4 w-4 ltr:mr-2.5 rtl:ml-2.5 fill-primary group-hover:fill-white transition-all" />
-            <span className="text-primary group-hover:text-white transition-all">
-              Cart
-            </span>
-          </button>
+          {isExistInCart && productInCart ? (
+            <QtyController
+              variant="secondary"
+              qty={productInCart?.qty}
+              increment={() => dispatch(increment(id))}
+              decrement={() =>
+                productInCart.qty > 1
+                  ? dispatch(decrement(id))
+                  : dispatch(removeFromCart(id))
+              }
+            />
+          ) : (
+            <button
+              onClick={() => dispatch(addToCart(product))}
+              className="group flex items-center gap-x-2 px-5 py-2 border border-gray-200 rounded-3xl hover:border-primary hover:bg-primary transition-all"
+            >
+              <Icons.cart className="h-4 w-4 ltr:mr-2.5 rtl:ml-2.5 fill-primary group-hover:fill-white transition-all" />
+              <span className="text-primary group-hover:text-white transition-all">
+                Cart
+              </span>
+            </button>
+          )}
         </div>
       </div>
     </div>

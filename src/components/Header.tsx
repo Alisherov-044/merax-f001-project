@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export function Header() {
   return (
-    <header className="fixed top-0 z-10 w-full bg-white h-16 md:h-20 border-b flex items-center shadow-sm">
+    <header className="fixed top-0 z-20 w-full bg-white h-16 md:h-20 border-b flex items-center shadow-sm">
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-x-5">
           <button className="hidden md:flex xl:hidden flex-col justify-between w-6 h-4">

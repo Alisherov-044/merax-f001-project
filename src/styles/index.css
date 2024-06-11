@@ -9,12 +9,17 @@
 html,
 body,
 #root {
-  @apply h-full;
 }
 
 button,
 input {
   @apply outline-none;
+}
+
+ul,
+ol,
+li {
+ @apply list-none;
 }
 
 .container {

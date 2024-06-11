@@ -26,10 +26,17 @@ export type TProduct = {
     id: number;
     name: string;
     description: string;
-    category: string;
+    category_id: number;
     price: number;
     discount?: number;
     images: string[];
+}
+
+export type TCategory = {
+    id: number;
+    name: string;
+    slug: string;
+    icon: string;
 }
 
 export type TCartProduct = TProduct & {
@@ -62,4 +69,5 @@ export type QtyControllerProps = {
     qty: number
     increment: () => void
     decrement: () => void
+    variant?: "primary" | "secondary"
 }

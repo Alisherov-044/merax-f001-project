@@ -1,19 +1,43 @@
-import { products } from "@/data";
 import { HeroSection } from "./sections/Hero";
 import { ProductsSection } from "./sections/Products";
 import { CartTriggerBtn, Drawer, Icons, MiniCard } from "@/components";
 import { useSelector, useDispatch } from "react-redux";
 import { closeCart } from "@/redux/slices/stateSlice";
+import { useEffect, useState } from "react";
+import axios from 'axios'
+import { Categories } from "./sections/Categories";
 
 export function HomePage() {
   const { isCartOpen } = useSelector((state) => state.state);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const [products, setProducts] = useState([])
+
+  async function getProducts() {
+        // const products = await fetch("https://pickbazar-api-kjy8.onrender.com/api/products", { 
+        //     method: "GET" 
+        // }).then((res) => res.json())
+        // setProducts(products)
+
+        try {
+          const products = await axios.get("https://pickbazar-api-kjy8.onrender.com/api/products")
+          setProducts(products.data)
+        } catch (error) {
+          console.log(error)
+        }
+    }
+
+    useEffect(() => {
+      getProducts()
+    }, [])
 
   return (
     <main>
       <HeroSection />
-      <ProductsSection products={products} />
+      <div className="flex">
+        <Categories />
+        <ProductsSection products={products} />
+      </div>
       <CartTriggerBtn />
       <Drawer isOpen={isCartOpen} onClose={() => dispatch(closeCart())}>
         <div className="flex items-center justify-between py-4 px-6 border-b">
