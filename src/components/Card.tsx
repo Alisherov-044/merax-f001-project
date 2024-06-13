@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
 export function Card({ product }: CardProps) {
-  let { id, name, description, price, images, category, discount } = product;
+  let { id, name, price, images, discount } = product;
   const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
   const isExistInCart = cart.some((item) => item.id === id);

@@ -31,7 +31,16 @@ export function Categories() {
   }, []);
 
   function filter(id: number) {
-    navigate(`?category=${id}`);
+    const query = location.search.replace("?", "");
+    if (query) {
+      if (query.split("=")[0] !== "category") {
+        navigate(`?category=${id}&${query}`);
+      } else {
+        navigate(`?category=${id}&${query.split("&")[1]}`);
+      }
+    } else {
+      navigate(`?category=${id}`);
+    }
   }
 
   return (

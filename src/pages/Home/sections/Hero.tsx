@@ -1,8 +1,20 @@
 import { SearchInput } from "@/components";
+import { useNavigate } from "react-router-dom";
 
 export function HeroSection() {
-  function onSearch(query: string) {
-    console.log(query);
+  const navigate = useNavigate();
+
+  function onSearch(search: string) {
+    const query = location.search.replace("?", "");
+    if (query) {
+      if (query.split("&")[1].split("=")[0] !== "search") {
+        navigate(`?${query}&search=${search}`);
+      } else {
+        navigate(`?${query.split("&")[0]}&search=${search}`);
+      }
+    } else {
+      navigate(`?search=${search}`);
+    }
   }
 
   return (
